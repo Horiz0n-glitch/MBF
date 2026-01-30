@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
-      <body className="font-body bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased transition-colors duration-300">
+      <body className="font-body bg-background-light text-text-light antialiased transition-colors duration-300">
         {children}
       </body>
     </html>

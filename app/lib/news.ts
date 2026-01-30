@@ -17,7 +17,8 @@ export interface NewsItem {
 
 export async function getNews(): Promise<NewsItem[]> {
   try {
-    const result = await directus.request(readItems('noticias', {
+    const { adminClient } = await import('./directus');
+    const result = await adminClient.request(readItems('noticias', {
       sort: ['-date_created']
     }));
     return result as unknown as NewsItem[];
@@ -29,7 +30,8 @@ export async function getNews(): Promise<NewsItem[]> {
 
 export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
   try {
-    const result = await directus.request(readItems('noticias', {
+    const { adminClient } = await import('./directus');
+    const result = await adminClient.request(readItems('noticias', {
       filter: { slug: { _eq: slug } },
       limit: 1
     }));

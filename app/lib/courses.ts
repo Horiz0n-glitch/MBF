@@ -70,7 +70,7 @@ export interface Course {
     clases: Clase[]; // Alias O2M
 }
 
-const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://basquet-formativo-directus-d4c125-76-13-172-131.traefik.me';
+const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055';
 const ASSETS_URL = `${DIRECTUS_URL.replace(/\/$/, '')}/assets/`;
 const DEFAULT_PLACEHOLDER = 'https://firebasestorage.googleapis.com/v0/b/basquet-formativo.appspot.com/o/images%2FCancha-Blanca-50.png?alt=media&token=fb103b37-5df5-46f2-8521-39259a133baf';
 
@@ -84,8 +84,10 @@ export function getImageUrl(id: string | null) {
 
 export async function getCourses(): Promise<Course[]> {
     try {
-        console.log('Fetching courses from:', process.env.NEXT_PUBLIC_DIRECTUS_URL);
-        const result = await directus.request(readItems('cursos', {
+        console.log('[Courses] Fetching all courses...');
+        // Usamos adminClient para asegurar que vemos el contenido aunque no sea público en Directus aún
+        const { adminClient } = await import('./directus');
+        const result = await adminClient.request(readItems('cursos', {
             fields: [
                 '*',
                 { categorias: [{ categoria: ['nombre', 'slug'] }] },
@@ -94,18 +96,15 @@ export async function getCourses(): Promise<Course[]> {
         }));
         return result as unknown as Course[];
     } catch (error: any) {
-        console.error('Error fetching courses from Directus:', {
-            message: error.message,
-            status: error.response?.status,
-            errors: error.errors
-        });
+        console.error('Error fetching courses from Directus:', error.message || error);
         return [];
     }
 }
 
 export async function getCourseBySlug(slug: string): Promise<Course | null> {
     try {
-        const result = await directus.request(readItems('cursos', {
+        const { adminClient } = await import('./directus');
+        const result = await adminClient.request(readItems('cursos', {
             filter: { slug: { _eq: slug } },
             fields: [
                 '*',
@@ -121,7 +120,8 @@ export async function getCourseBySlug(slug: string): Promise<Course | null> {
 
         // Fetch Clases
         try {
-            const clasesResult = await directus.request(readItems('clases', {
+            const { adminClient } = await import('./directus');
+            const clasesResult = await adminClient.request(readItems('clases', {
                 filter: { curso: { _eq: course.id } },
                 sort: ['orden']
             }));
