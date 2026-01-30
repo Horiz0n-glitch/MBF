@@ -1,12 +1,13 @@
 
 import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
-import { getCourseBySlug, getImageUrl, getCourseProgress } from "../../../../lib/courses";
+import { getCourseBySlug, getImageUrl, getCourseProgress, getComments } from "../../../../lib/courses";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { loginAction, buyCourseAction, toggleProgressAction } from "../../../../lib/actions";
 import { createDirectus, rest, staticToken, readMe } from "@directus/sdk";
+import CommentSection from "../../../../components/CommentSection";
 
 export const dynamic = 'force-dynamic';
 
@@ -49,6 +50,9 @@ export default async function ClasePage({
     const hasPurchased = purchasedCourses.includes(course.id) || purchasedCourses.includes(course.slug);
     const canAccess = currentClass.es_gratis ? isLoggedIn : (isLoggedIn && hasPurchased);
     const isCompleted = completedClasses.includes(currentClass.id);
+
+    // Cargar comentarios
+    const comments = await getComments(currentClass.id);
 
     return (
         <>
@@ -110,9 +114,14 @@ export default async function ClasePage({
                                             <div className="max-w-md">
                                                 <h2 className="text-3xl display-font text-white mb-4">ACCESO REQUERIDO</h2>
                                                 <p className="text-gray-300 mb-8">Esta clase es exclusiva para alumnos inscritos en este curso.</p>
-                                                <form action={async () => { 'use server'; await buyCourseAction(course.id); }}>
-                                                    <button type="submit" className="bg-primary text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">Inscribirme Ahora</button>
-                                                </form>
+                                                <div className="flex flex-col items-center">
+                                                    <button disabled className="bg-white/10 text-gray-400 cursor-not-allowed px-10 py-4 rounded-full font-bold uppercase tracking-widest">
+                                                        Inscripciones no disponibles
+                                                    </button>
+                                                    <span className="text-[10px] text-primary font-black uppercase tracking-widest mt-4">
+                                                        Próximamente disponible
+                                                    </span>
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -176,6 +185,14 @@ export default async function ClasePage({
                                     </div>
                                 </div>
                             </div>
+
+                            {/* SECCIÓN DE COMENTARIOS */}
+                            <CommentSection
+                                courseId={course.slug}
+                                classId={currentClass.id}
+                                initialComments={comments}
+                                isLoggedIn={isLoggedIn}
+                            />
                         </div>
 
                         {/* Sidebar: Class List with Progress Checkmarks */}

@@ -135,39 +135,37 @@ export async function toggleProgressAction(courseId: string, classId: string, co
 }
 
 export async function buyCourseAction(courseId: string) {
+    return { error: 'Las inscripciones de pago no están disponibles actualmente en modo de prueba.' };
+}
+
+export async function postCommentAction(courseId: string, classId: string, content: string, parentId?: string) {
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_session')?.value;
 
-    if (!token) return { error: 'Inicia sesión para comprar' };
+    if (!token) return { error: 'Debes iniciar sesión para comentar' };
+    if (!content.trim()) return { error: 'El comentario no puede estar vacío' };
 
     const client = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(token));
 
     try {
         const user = await client.request(readMe());
 
-        // Creamos la compra y el acceso
-        await adminClient.request(createItem('compras', {
+        // Verificamos si es un instructor (opcional, por ahora lo marcamos falso por defecto a menos que sea admin)
+        const isInstructor = user.role === '00000000-0000-0000-0000-000000000000'; // Ajustar según ID del rol instructor si existiera
+
+        await adminClient.request(createItem('comentarios' as any, {
             usuario: user.id,
             curso: courseId,
-            estado_pago: 'aprobado',
-            metodo_pago: 'simulado'
+            clase: classId,
+            contenido: content,
+            padre: parentId || null,
+            es_instructor: isInstructor
         }));
 
-        await adminClient.request(createItem('accesos_cursos', {
-            usuario: user.id,
-            curso: courseId,
-            activo: true
-        }));
-
-        // Mantener simulación por cookies para compatibilidad actual
-        const current = cookieStore.get('purchased_courses')?.value || '';
-        const updated = current ? `${current},${courseId}` : courseId;
-        cookieStore.set('purchased_courses', updated, { path: '/' });
-
-        revalidatePath('/');
+        revalidatePath(`/cursos/${courseId}/clase/${classId}`);
         return { success: true };
     } catch (e: any) {
-        return { error: 'Error al procesar la compra' };
+        console.error('Error posteando comentario:', e);
+        return { error: 'Error al enviar el comentario' };
     }
 }
-

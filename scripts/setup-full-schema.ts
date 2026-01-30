@@ -228,6 +228,17 @@ async function main() {
     await createFieldSafe('equipo', 'email', 'string', { interface: 'input' });
     await createFieldSafe('equipo', 'orden', 'integer', { interface: 'input' });
 
+    // 11. COMENTARIOS
+    await createCollectionSafe('comentarios');
+    await createFieldSafe('comentarios', 'id', 'uuid', {}, { primary_key: true });
+    await createFieldSafe('comentarios', 'usuario', 'uuid', {}, { foreign_key_table: 'directus_users' });
+    await createFieldSafe('comentarios', 'curso', 'uuid', {}, { foreign_key_table: 'cursos' });
+    await createFieldSafe('comentarios', 'clase', 'uuid', {}, { foreign_key_table: 'clases' });
+    await createFieldSafe('comentarios', 'contenido', 'text', { interface: 'input-multiline' });
+    await createFieldSafe('comentarios', 'fecha', 'timestamp', { interface: 'datetime', special: ['date-created'] });
+    await createFieldSafe('comentarios', 'padre', 'uuid', {}, { foreign_key_table: 'comentarios' }); // Para respuestas
+    await createFieldSafe('comentarios', 'es_instructor', 'boolean', { interface: 'boolean', default_value: false });
+
     console.log('--- Configuración Finalizada con ÉXITO ---');
 }
 

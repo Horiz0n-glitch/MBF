@@ -72,11 +72,14 @@ export default async function CourseDetailPage({
                             </div>
                             <p className="text-xs text-gray-500 mt-2">Acceso de por vida • Soporte 24/7</p>
                         </div>
-                        <form action={async () => { 'use server'; await buyCourseAction(course.id); }}>
-                            <button type="submit" className="bg-black dark:bg-white text-white dark:text-black hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all px-10 py-5 rounded-full font-bold uppercase tracking-widest text-lg w-full md:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                                Comprar Ahora (Simulado)
+                        <div className="flex flex-col items-center md:items-end">
+                            <button disabled className="bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed px-10 py-5 rounded-full font-bold uppercase tracking-widest text-lg w-full md:w-auto shadow-inner">
+                                Inscripciones no disponibles
                             </button>
-                        </form>
+                            <span className="text-[10px] text-primary font-black uppercase tracking-widest mt-2 px-4 py-1 bg-primary/10 rounded-full animate-pulse">
+                                Próximamente disponible
+                            </span>
+                        </div>
                     </div>
                 </section>
 

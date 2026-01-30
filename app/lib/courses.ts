@@ -156,6 +156,45 @@ export async function getUserCourses(userId: string): Promise<Course[]> {
         return [];
     }
 }
+export interface Comment {
+    id: string;
+    usuario: {
+        id: string;
+        first_name: string;
+        last_name: string;
+    };
+    contenido: string;
+    fecha: string;
+    padre?: string;
+    es_instructor: boolean;
+    respuestas?: Comment[];
+}
+
+export async function getComments(classId: string): Promise<Comment[]> {
+    try {
+        const result = await directus.request(readItems('comentarios' as any, {
+            filter: { clase: { _eq: classId } },
+            sort: ['fecha'],
+            fields: [
+                '*',
+                { usuario: ['id', 'first_name', 'last_name'] }
+            ]
+        }));
+
+        const allComments = result as unknown as Comment[];
+
+        // Organizar en hilos (padre/hijo)
+        const rootComments = allComments.filter(c => !c.padre);
+        rootComments.forEach(root => {
+            root.respuestas = allComments.filter(c => c.padre === root.id);
+        });
+
+        return rootComments;
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        return [];
+    }
+}
 
 export async function getCourseProgress(userId: string, courseId: string): Promise<ClaseProgress[]> {
     try {
