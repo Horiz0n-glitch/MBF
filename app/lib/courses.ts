@@ -1,5 +1,5 @@
 
-import { directus } from './directus';
+import { directus, adminClient } from './directus';
 import { readItems } from '@directus/sdk';
 
 export interface Instructor {
@@ -17,7 +17,7 @@ export interface Instructor {
 
 export async function getInstructors(): Promise<Instructor[]> {
     try {
-        const result = await directus.request(readItems('instructores', {
+        const result = await adminClient.request(readItems('instructores', {
             sort: ['nombre']
         }));
         return result as unknown as Instructor[];
@@ -86,8 +86,6 @@ export function getImageUrl(id: string | null) {
 export async function getCourses(): Promise<Course[]> {
     try {
         console.log('[Courses] Fetching all courses...');
-        // Usamos adminClient para asegurar que vemos el contenido aunque no sea público en Directus aún
-        const { adminClient } = await import('./directus');
         const result = await adminClient.request(readItems('cursos', {
             fields: [
                 '*',
@@ -104,7 +102,6 @@ export async function getCourses(): Promise<Course[]> {
 
 export async function getCourseBySlug(slug: string): Promise<Course | null> {
     try {
-        const { adminClient } = await import('./directus');
         const result = await adminClient.request(readItems('cursos', {
             filter: { slug: { _eq: slug } },
             fields: [
@@ -141,7 +138,7 @@ export async function getCourseBySlug(slug: string): Promise<Course | null> {
 
 export async function getUserCourses(userId: string): Promise<Course[]> {
     try {
-        const result = await directus.request(readItems('accesos_cursos', {
+        const result = await adminClient.request(readItems('accesos_cursos', {
             filter: {
                 usuario: { _eq: userId },
                 activo: { _eq: true }
@@ -173,7 +170,12 @@ export interface Comment {
 
 export async function getComments(classId: string): Promise<Comment[]> {
     try {
-        const result = await directus.request(readItems('comentarios' as any, {
+        if (!classId) {
+            console.warn('[Comments] No classId provided');
+            return [];
+        }
+        console.log(`[Comments] Fetching for classId: ${classId}`);
+        const result = await adminClient.request(readItems('comentarios' as any, {
             filter: { clase: { _eq: classId } },
             sort: ['fecha'],
             fields: [
@@ -191,15 +193,18 @@ export async function getComments(classId: string): Promise<Comment[]> {
         });
 
         return rootComments;
-    } catch (error) {
-        console.error('Error fetching comments:', error);
+    } catch (error: any) {
+        console.error('Error fetching comments:', error.message || error);
+        if (error.response?.data) {
+            console.error('Directus Error Details:', JSON.stringify(error.response.data, null, 2));
+        }
         return [];
     }
 }
 
 export async function getCourseProgress(userId: string, courseId: string): Promise<ClaseProgress[]> {
     try {
-        const result = await directus.request(readItems('progreso_clases', {
+        const result = await adminClient.request(readItems('progreso_clases', {
             filter: {
                 usuario: { _eq: userId },
                 curso: { _eq: courseId },

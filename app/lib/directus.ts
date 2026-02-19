@@ -1,7 +1,11 @@
 import { createDirectus, rest, staticToken } from '@directus/sdk';
 
 const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055';
-const ADMIN_TOKEN = process.env.DIRECTUS_ADMIN_TOKEN;
+const ADMIN_TOKEN = process.env.DIRECTUS_ADMIN_TOKEN || 'WmX7KmV0IYu8uqyJoUnt7lCLRlDO-_9a';
+
+if (!process.env.DIRECTUS_ADMIN_TOKEN) {
+    console.warn('[Directus] DIRECTUS_ADMIN_TOKEN not found in environment, using fallback');
+}
 
 console.log('[Directus] Connecting to:', DIRECTUS_URL);
 
