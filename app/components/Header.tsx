@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { logoutAction } from "../lib/actions";
+import MobileMenu from "./MobileMenu";
 
 export default async function Header() {
     const cookieStore = await cookies();
@@ -32,29 +33,31 @@ export default async function Header() {
                             Contacto
                         </Link>
                     </nav>
-                    <div className="flex items-center space-x-4">
-
-                        {isLoggedIn ? (
-                            <div className="flex items-center space-x-4">
-                                <Link href="/dashboard" className="text-xs font-bold uppercase bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-full hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all">
-                                    Mis Cursos
-                                </Link>
-                                <form action={logoutAction}>
-                                    <button type="submit" className="text-xs font-bold uppercase text-red-500 hover:text-red-700 transition-all">
-                                        Salir
-                                    </button>
-                                </form>
-                            </div>
-                        ) : (
-                            <div className="flex items-center space-x-2">
-                                <Link href="/login" className="text-xs font-bold uppercase px-4 py-2 hover:text-primary transition-all">
-                                    Entrar
-                                </Link>
-                                <Link href="/registro" className="text-xs font-bold uppercase bg-primary text-white px-4 py-2 rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all">
-                                    Registrarse
-                                </Link>
-                            </div>
-                        )}
+                    <div className="flex items-center">
+                        <div className="hidden md:flex items-center space-x-4">
+                            {isLoggedIn ? (
+                                <div className="flex items-center space-x-4">
+                                    <Link href="/dashboard" className="text-xs font-bold uppercase bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-full hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all">
+                                        Mis Cursos
+                                    </Link>
+                                    <form action={logoutAction}>
+                                        <button type="submit" className="text-xs font-bold uppercase text-red-500 hover:text-red-700 transition-all">
+                                            Salir
+                                        </button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div className="flex items-center space-x-2">
+                                    <Link href="/login" className="text-xs font-bold uppercase px-4 py-2 hover:text-primary transition-all">
+                                        Entrar
+                                    </Link>
+                                    <Link href="/registro" className="text-xs font-bold uppercase bg-primary text-white px-4 py-2 rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all">
+                                        Registrarse
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                        <MobileMenu isLoggedIn={isLoggedIn} />
                     </div>
                 </div>
             </div>

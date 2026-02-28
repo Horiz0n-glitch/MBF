@@ -122,15 +122,19 @@ export default async function AboutPage() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-20">
                                 {team.map((member: any) => (
                                     <div key={member.id} className="group">
-                                        <div className="aspect-3/4 bg-gray-200 dark:bg-surface-dark rounded-[2.5rem] overflow-hidden mb-8 relative shadow-xl group-hover:shadow-2xl transition-all duration-700">
-                                            <img
-                                                src={getImageUrl(member.foto)}
-                                                alt={`${member.nombre} ${member.apellido}`}
-                                                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
-                                            />
+                                        <div className="aspect-3/4 bg-gray-200 dark:bg-surface-dark rounded-[2.5rem] overflow-hidden mb-8 relative shadow-xl group-hover:shadow-2xl transition-all duration-700 flex items-center justify-center">
+                                            {member.foto ? (
+                                                <img
+                                                    src={getImageUrl(member.foto)}
+                                                    alt={`${member.nombre} ${member.apellido}`}
+                                                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-110"
+                                                />
+                                            ) : (
+                                                <span className="material-icons text-8xl text-gray-400 dark:text-gray-600">person</span>
+                                            )}
                                             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8">
                                                 <p className="text-white text-[10px] font-mono uppercase tracking-[0.2em] mb-2">Contacto Directo</p>
-                                                <p className="text-white text-sm font-bold truncate">{member.email}</p>
+                                                <p className="text-white text-sm font-bold truncate">{member.email || 'No disponible'}</p>
                                             </div>
                                         </div>
                                         <h3 className="text-3xl display-font text-black dark:text-white group-hover:text-primary transition-colors duration-500">
