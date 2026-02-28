@@ -27,7 +27,7 @@ export default function MobileMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
     }, [isOpen]);
 
     return (
-        <div className="md:hidden flex items-center">
+        <div className="lg:hidden flex items-center">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-primary focus:outline-none"
@@ -91,5 +91,6 @@ export default function MobileMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
                 </div>
             )}
         </div>
+
     );
 }

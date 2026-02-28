@@ -16,7 +16,7 @@ export default async function Header() {
                             BÁSQUET FORMATIVO
                         </Link>
                     </div>
-                    <nav className="hidden md:flex space-x-8">
+                    <nav className="hidden lg:flex space-x-8">
                         <Link href="/cursos" className="text-sm font-semibold uppercase hover:text-primary transition-colors">
                             Cursos
                         </Link>
@@ -34,7 +34,7 @@ export default async function Header() {
                         </Link>
                     </nav>
                     <div className="flex items-center">
-                        <div className="hidden md:flex items-center space-x-4">
+                        <div className="hidden lg:flex items-center space-x-4">
                             {isLoggedIn ? (
                                 <div className="flex items-center space-x-4">
                                     <Link href="/dashboard" className="text-xs font-bold uppercase bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-full hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all">
