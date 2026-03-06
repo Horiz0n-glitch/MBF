@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { logoutAction } from "../lib/actions";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 export default function MobileMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -50,8 +51,8 @@ export default function MobileMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
                         <Link href="/cursos" className="text-xl font-semibold uppercase hover:text-primary transition-colors border-b border-border-light dark:border-border-dark pb-4">
                             Cursos
                         </Link>
-                        <Link href="/noticias" className="text-xl font-semibold uppercase hover:text-primary transition-colors border-b border-border-light dark:border-border-dark pb-4">
-                            Noticias
+                        <Link href="/podcast" className="text-xl font-semibold uppercase hover:text-primary transition-colors border-b border-border-light dark:border-border-dark pb-4">
+                            Podcast
                         </Link>
                         <Link href="/mentorias" className="text-xl font-semibold uppercase hover:text-primary transition-colors border-b border-border-light dark:border-border-dark pb-4">
                             Mentorías
@@ -86,6 +87,12 @@ export default function MobileMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
                                     </Link>
                                 </div>
                             )}
+                        </div>
+
+                        {/* Dark mode toggle */}
+                        <div className="pt-6 border-t border-border-light dark:border-border-dark flex items-center justify-between">
+                            <span className="text-sm font-semibold uppercase text-gray-500">Apariencia</span>
+                            <ThemeToggle />
                         </div>
                     </div>
                 </div>

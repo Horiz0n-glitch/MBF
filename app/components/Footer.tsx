@@ -23,27 +23,27 @@ export default function Footer() {
                 <div className="flex flex-col justify-between">
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
                         <div>
-                            <h4 className="font-bold uppercase text-sm mb-4">Cursos</h4>
+                            <h4 className="font-bold uppercase text-sm mb-4">Navegar</h4>
                             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li><Link className="hover:text-primary" href="/cursos">Básquet Formativo</Link></li>
-                                <li><Link className="hover:text-primary" href="/cursos">Entrenamiento Avanzado</Link></li>
-                                <li><Link className="hover:text-primary" href="/cursos">Técnicas</Link></li>
+                                <li><Link className="hover:text-primary" href="/cursos">Cursos</Link></li>
+                                <li><Link className="hover:text-primary" href="/podcast">Podcast</Link></li>
+                                <li><Link className="hover:text-primary" href="/mentorias">Mentorías</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="font-bold uppercase text-sm mb-4">Compañía</h4>
                             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li><Link className="hover:text-primary" href="#">Sobre Nosotros</Link></li>
-                                <li><Link className="hover:text-primary" href="#">Noticias</Link></li>
-                                <li><Link className="hover:text-primary" href="#">Contacto</Link></li>
+                                <li><Link className="hover:text-primary" href="/sobre-nosotros">Sobre Nosotros</Link></li>
+                                <li><Link className="hover:text-primary" href="/contacto">Contacto</Link></li>
+                                <li><Link className="hover:text-primary" href="/login">Ingresar</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="font-bold uppercase text-sm mb-4">Conectar</h4>
                             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li><a className="hover:text-primary" href="https://twitter.com/jrgarciadev" target="_blank">Twitter</a></li>
-                                <li><a className="hover:text-primary" href="#">Facebook</a></li>
-                                <li><a className="hover:text-primary" href="#">Instagram</a></li>
+                                <li><a className="hover:text-primary" href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+                                <li><a className="hover:text-primary" href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                                <li><a className="hover:text-primary" href="https://www.instagram.com/basketformativo2026?igsh=aHJ1NXBhOHkzODk2&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                             </ul>
                         </div>
                     </div>

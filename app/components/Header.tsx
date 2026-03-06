@@ -2,13 +2,14 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { logoutAction } from "../lib/actions";
 import MobileMenu from "./MobileMenu";
+import ThemeToggle from "./ThemeToggle";
 
 export default async function Header() {
     const cookieStore = await cookies();
     const isLoggedIn = cookieStore.has('auth_session');
 
     return (
-        <header className="w-full border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark sticky top-0 z-50">
+        <header className="w-full border-b border-border-site bg-surface-site sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center">
@@ -20,8 +21,8 @@ export default async function Header() {
                         <Link href="/cursos" className="text-sm font-semibold uppercase hover:text-primary transition-colors">
                             Cursos
                         </Link>
-                        <Link href="/noticias" className="text-sm font-semibold uppercase hover:text-primary transition-colors">
-                            Noticias
+                        <Link href="/podcast" className="text-sm font-semibold uppercase hover:text-primary transition-colors">
+                            Podcast
                         </Link>
                         <Link href="/mentorias" className="text-sm font-semibold uppercase hover:text-primary transition-colors">
                             Mentorías
@@ -56,6 +57,7 @@ export default async function Header() {
                                     </Link>
                                 </div>
                             )}
+                            <ThemeToggle />
                         </div>
                         <MobileMenu isLoggedIn={isLoggedIn} />
                     </div>

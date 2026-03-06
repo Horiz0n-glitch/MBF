@@ -32,6 +32,10 @@ async function setupNews() {
             { field: 'resumen', type: 'text' },
             { field: 'contenido', type: 'text', meta: { interface: 'input-rich-text-html' } },
             { field: 'autor', type: 'string' },
+            { field: 'archivo_audio', type: 'uuid', meta: { interface: 'file' } },
+            { field: 'spotify_url', type: 'string' },
+            { field: 'youtube_url', type: 'string' },
+            { field: 'duracion', type: 'string' },
             { field: 'date_created', type: 'timestamp', meta: { special: ['date-created'], hidden: true } },
             { field: 'id', type: 'uuid', meta: { special: ['uuid'], hidden: true } }
         ];

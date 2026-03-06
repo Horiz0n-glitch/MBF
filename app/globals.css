@@ -2,19 +2,66 @@
 
 @theme {
   --color-primary: #3341FF;
-  --color-background-light: #F5F5F7;
-  --color-background-dark: #F5F5F7;
-  --color-surface-light: #FFFFFF;
-  --color-surface-dark: #FFFFFF;
-  --color-text-light: #111111;
-  --color-text-dark: #111111;
-  --color-border-light: #E5E5E5;
-  --color-border-dark: #E5E5E5;
+
+  --color-bg-site: var(--bg-site);
+  --color-surface-site: var(--surface-site);
+  --color-text-site: var(--text-site);
+  --color-border-site: var(--border-site);
 
   --font-display: var(--font-anton), sans-serif;
   --font-body: var(--font-inter), sans-serif;
-  
+
   --animate-spin-slow: spin 12s linear infinite;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-site: #F8F8FA;
+    --surface-site: #FFFFFF;
+    --text-site: #0A0A0B;
+    --border-site: #E2E2E9;
+    color-scheme: light;
+  }
+
+  .dark {
+    --bg-site: #050508;
+    --surface-site: #0F0F14;
+    --text-site: #F2F2F7;
+    --border-site: #1E1E26;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-site);
+    color: var(--text-site);
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-site);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-site);
+    border: 3px solid var(--bg-site);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
 }
 
 @layer utilities {
@@ -25,12 +72,11 @@
   }
 }
 
-/* Material Icons styling fix if needed, though usually standard */
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
+  font-size: 24px;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -38,15 +84,8 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-
-  /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
   font-feature-settings: 'liga';
 }

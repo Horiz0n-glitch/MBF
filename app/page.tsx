@@ -11,18 +11,18 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative pt-12 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
-            <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-5 pointer-events-none select-none overflow-hidden">
-              <h1 className="text-[8rem] md:text-[12rem] leading-none text-black dark:text-white whitespace-nowrap">
+            <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-5 pointer-events-none select-none overflow-hidden text-text-site">
+              <h1 className="text-[8rem] md:text-[12rem] leading-none whitespace-nowrap">
                 ENTRENA
               </h1>
             </div>
             <div className="lg:col-span-4 mt-20 relative z-10">
-              <div className="border-t-2 border-black dark:border-white pt-4 mb-4">
-                <span className="text-sm font-mono text-gray-500 dark:text-gray-400">
+              <div className="border-t-2 border-border-site pt-4 mb-4">
+                <span className="text-sm font-mono opacity-60">
                   EST. 2026
                 </span>
               </div>
-              <h1 className="text-6xl md:text-8xl display-font leading-none mb-6 text-black dark:text-white">
+              <h1 className="text-6xl md:text-8xl display-font leading-none mb-6 text-text-site">
                 MEJORA TU<br />JUEGO HOY
               </h1>
             </div>
@@ -39,7 +39,7 @@ export default function Home() {
                 </p>
                 <div className="flex justify-between items-end border-t border-white/30 pt-4">
                   <span className="text-xs uppercase tracking-wider">
-                    Desde 2015
+                    Desde 2016
                   </span>
                   <span className="material-icons animate-bounce">
                     arrow_downward
@@ -48,12 +48,12 @@ export default function Home() {
               </div>
             </div>
             <div className="lg:col-span-4 flex flex-col items-end justify-center lg:mt-20">
-              <div className="border-b-2 border-black dark:border-white w-full text-right pb-4 mb-4">
-                <span className="text-5xl md:text-7xl display-font text-black dark:text-white">
+              <div className="border-b-2 border-border-site w-full text-right pb-4 mb-4">
+                <span className="text-5xl md:text-7xl display-font text-text-site">
                   NIVEL PRO
                 </span>
               </div>
-              <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-black dark:border-white mt-4 bg-gray-200">
+              <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-border-site mt-4 bg-surface-site">
                 {/* Fallback pattern or logic for image */}
                 <img
                   alt="Basketball hoop"
@@ -71,18 +71,18 @@ export default function Home() {
         </section>
 
         {/* About/Methodology Section */}
-        <section className="py-20 bg-white dark:bg-surface-dark">
+        <section className="py-20 bg-surface-site">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-2">
+              <h2 className="text-sm font-bold uppercase tracking-widest opacity-50 mb-2">
                 Nuestra Filosofía
               </h2>
-              <p className="max-w-2xl text-xl text-gray-800 dark:text-gray-200">
+              <p className="max-w-2xl text-xl text-text-site leading-relaxed">
                 En Básquet Formativo, nos aseguramos de contar con entrenadores altamente calificados, comprometidos en ayudarte a alcanzar el máximo rendimiento.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="border border-border-light dark:border-border-dark rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-shadow bg-surface-light dark:bg-black group cursor-pointer h-64 relative overflow-hidden">
+              <div className="border border-border-site rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-all bg-bg-site group cursor-pointer h-64 relative overflow-hidden">
                 <div className="absolute top-4 left-4 text-xs font-mono text-gray-400">
                   01
                 </div>
@@ -94,12 +94,12 @@ export default function Home() {
                   Habilidades fundamentales para iniciación deportiva.
                 </p>
                 <div className="absolute bottom-4 w-full px-8">
-                  <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-1 w-full bg-border-site rounded-full overflow-hidden">
                     <div className="h-full bg-primary w-0 group-hover:w-full transition-all duration-700"></div>
                   </div>
                 </div>
               </div>
-              <div className="border border-border-light dark:border-border-dark rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-shadow bg-surface-light dark:bg-black group cursor-pointer h-64 relative overflow-hidden">
+              <div className="border border-border-site rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-all bg-bg-site group cursor-pointer h-64 relative overflow-hidden">
                 <div className="absolute top-4 left-4 text-xs font-mono text-gray-400">
                   02
                 </div>
@@ -111,12 +111,12 @@ export default function Home() {
                   Estrategias defensivas y liderazgo de equipo.
                 </p>
                 <div className="absolute bottom-4 w-full px-8">
-                  <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-1 w-full bg-border-site rounded-full overflow-hidden">
                     <div className="h-full bg-primary w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
                   </div>
                 </div>
               </div>
-              <div className="border border-border-light dark:border-border-dark rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-shadow bg-surface-light dark:bg-black group cursor-pointer h-64 relative overflow-hidden">
+              <div className="border border-border-site rounded-3xl p-8 flex flex-col items-center justify-center hover:shadow-lg transition-all bg-bg-site group cursor-pointer h-64 relative overflow-hidden">
                 <div className="absolute top-4 left-4 text-xs font-mono text-gray-400">
                   03
                 </div>
@@ -128,7 +128,7 @@ export default function Home() {
                   Tecnificación y análisis de rendimiento superior.
                 </p>
                 <div className="absolute bottom-4 w-full px-8">
-                  <div className="h-1 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-1 w-full bg-border-site rounded-full overflow-hidden">
                     <div className="h-full bg-primary w-0 group-hover:w-full transition-all duration-700 delay-200"></div>
                   </div>
                 </div>
@@ -168,20 +168,20 @@ export default function Home() {
             </div>
             <div className="flex flex-col space-y-8">
               <div className="border-t-4 border-primary pt-6">
-                <h2 className="text-4xl md:text-5xl display-font mb-4">
+                <h2 className="text-4xl md:text-5xl display-font mb-4 text-text-site">
                   INNOVANDO CON<br />CONOCIMIENTO
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                <p className="text-text-site opacity-70 mb-6 leading-relaxed">
                   Creemos que el conocimiento es clave para el éxito en el baloncesto.
                   Nuestros programas están diseñados para brindarte las herramientas teóricas y prácticas necesarias
                   para destacar en la formación de jugadores.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-lg h-40 w-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/basquet-formativo.appspot.com/o/images%2FLogo%20Grupo%20Horianski.PNG?alt=media&token=cbf3646a-c9f3-40bb-9d5c-5ff3183055be" className="object-cover w-full h-full" alt="Partner 1" />
+                  <div className="rounded-lg h-40 w-full bg-surface-site border border-border-site flex items-center justify-center overflow-hidden">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/basquet-formativo.appspot.com/o/images%2FLogo%20Grupo%20Horianski.PNG?alt=media&token=cbf3646a-c9f3-40bb-9d5c-5ff3183055be" className="object-cover w-full h-full grayscale hover:grayscale-0 transition-all" alt="Partner 1" />
                   </div>
-                  <div className="rounded-lg h-40 w-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                    <img src="https://res.cloudinary.com/dzqdjsrez/image/upload/v1726054543/MBF_OKK_wcguyw.png" className="object-contain p-4 w-full h-full" alt="Partner 2" />
+                  <div className="rounded-lg h-40 w-full bg-surface-site border border-border-site flex items-center justify-center overflow-hidden">
+                    <img src="https://res.cloudinary.com/dzqdjsrez/image/upload/v1726054543/MBF_OKK_wcguyw.png" className="object-contain p-4 w-full h-full grayscale hover:grayscale-0 transition-all" alt="Partner 2" />
                   </div>
                 </div>
                 <Link href="/cursos" className="inline-flex items-center mt-6 text-sm font-bold uppercase tracking-wide hover:text-primary">
@@ -193,7 +193,7 @@ export default function Home() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-gray-50 dark:bg-black/50">
+        <section className="py-16 bg-bg-site border-t border-border-site">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center mb-8">
               <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500 mr-4">
@@ -201,14 +201,14 @@ export default function Home() {
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-surface-dark p-8 rounded-2xl border border-border-light dark:border-border-dark">
-                <h3 className="text-5xl display-font mb-2">85%</h3>
+              <div className="bg-surface-site p-8 rounded-2xl border border-border-site">
+                <h3 className="text-5xl display-font mb-2 text-text-site">85%</h3>
                 <p className="text-sm text-gray-500">
                   Aumento en habilidades técnicas reportado por nuestros alumnos.
                 </p>
               </div>
-              <div className="bg-white dark:bg-surface-dark p-8 rounded-2xl border border-border-light dark:border-border-dark">
-                <h3 className="text-5xl display-font mb-2">90%</h3>
+              <div className="bg-surface-site p-8 rounded-2xl border border-border-site">
+                <h3 className="text-5xl display-font mb-2 text-text-site">90%</h3>
                 <p className="text-sm text-gray-500">
                   Mejora significativa en la toma de decisiones en cancha.
                 </p>
