@@ -134,6 +134,53 @@ export async function toggleProgressAction(courseId: string, classId: string, co
     }
 }
 
+export async function requestPasswordResetAction(formData: FormData) {
+    const email = formData.get('email') as string;
+    if (!email) return { error: 'El email es obligatorio' };
+
+    try {
+        const response = await fetch(`${DIRECTUS_URL}/auth/password/request`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, reset_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/recuperar-contrasena/reset` })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            return { error: data.errors?.[0]?.message || 'Error al enviar el email' };
+        }
+
+        return { success: true };
+    } catch (e: any) {
+        return { error: 'Error al procesar la solicitud' };
+    }
+}
+
+export async function resetPasswordAction(formData: FormData) {
+    const token = formData.get('token') as string;
+    const password = formData.get('password') as string;
+
+    if (!token || !password) return { error: 'Datos incompletos' };
+    if (password.length < 8) return { error: 'La contraseña debe tener al menos 8 caracteres' };
+
+    try {
+        const response = await fetch(`${DIRECTUS_URL}/auth/password/reset`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, password })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            return { error: data.errors?.[0]?.message || 'Token inválido o expirado' };
+        }
+
+        return { success: true };
+    } catch (e: any) {
+        return { error: 'Error al restablecer la contraseña' };
+    }
+}
+
 export async function buyCourseAction(courseId: string) {
     return { error: 'Las inscripciones de pago no están disponibles actualmente en modo de prueba.' };
 }

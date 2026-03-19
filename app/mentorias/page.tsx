@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { getInstructors, getImageUrl } from "../lib/courses";
 import Link from "next/link";
+import MentorContactModal from "../components/MentorContactModal";
 
 export const dynamic = 'force-dynamic';
 
@@ -102,12 +103,12 @@ export default async function MentoriasPage() {
                                                     <span className="flex items-center gap-1"><span className="material-icons text-sm">stars</span> Experto</span>
                                                     <span className="flex items-center gap-1"><span className="material-icons text-sm">schedule</span> 1h sesión</span>
                                                 </div>
-                                                <a
-                                                    href={`mailto:${inst.email || 'info@basquetformativo.com'}?subject=Consulta Mentoria con ${inst.nombre} ${inst.apellido}`}
-                                                    className="bg-black dark:bg-white text-white dark:text-black hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all text-center py-4 rounded-full font-bold uppercase tracking-widest text-xs shadow-lg hover:shadow-primary/20"
-                                                >
-                                                    Solicitar Mentoría
-                                                </a>
+                                                <MentorContactModal
+                                                    nombre={inst.nombre}
+                                                    apellido={inst.apellido}
+                                                    instagram={inst.instagram}
+                                                    whatsapp={inst.whatsapp}
+                                                />
                                             </div>
                                         </div>
                                     </div>

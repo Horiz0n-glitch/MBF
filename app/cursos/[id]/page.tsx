@@ -3,8 +3,8 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 import { getCourseBySlug, getImageUrl } from "../../lib/courses";
-import { buyCourseAction } from "../../lib/actions";
 import { notFound } from "next/navigation";
+import EnrollButton from "../../components/EnrollButton";
 
 export const dynamic = 'force-dynamic';
 
@@ -73,12 +73,7 @@ export default async function CourseDetailPage({
                             <p className="text-xs text-gray-500 mt-2">Acceso de por vida • Soporte 24/7</p>
                         </div>
                         <div className="flex flex-col items-center md:items-end">
-                            <button disabled className="bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed px-10 py-5 rounded-full font-bold uppercase tracking-widest text-lg w-full md:w-auto shadow-inner">
-                                Inscripciones no disponibles
-                            </button>
-                            <span className="text-[10px] text-primary font-black uppercase tracking-widest mt-2 px-4 py-1 bg-primary/10 rounded-full animate-pulse">
-                                Próximamente disponible
-                            </span>
+                            <EnrollButton courseId={course.id} />
                         </div>
                     </div>
                 </section>

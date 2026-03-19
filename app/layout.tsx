@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "./lib/auth-context";
 
 const anton = Anton({
   weight: "400",
@@ -46,7 +47,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased transition-colors duration-300">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

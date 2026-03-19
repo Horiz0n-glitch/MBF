@@ -71,7 +71,7 @@ function LoginFormInner() {
                     <div className="space-y-2">
                         <div className="flex justify-between">
                             <label className="text-xs font-bold uppercase tracking-widest text-gray-500 ml-1">Contraseña</label>
-                            <Link href="#" className="text-xs text-primary font-bold hover:underline">¿La olvidaste?</Link>
+                            <Link href="/recuperar-contrasena" className="text-xs text-primary font-bold hover:underline">¿La olvidaste?</Link>
                         </div>
                         <input
                             name="password"

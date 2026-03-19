@@ -12,6 +12,7 @@ export interface Instructor {
     email?: string;
     experiencia_anios?: number;
     instagram?: string;
+    whatsapp?: string;
     youtube?: string;
 }
 
