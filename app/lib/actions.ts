@@ -3,7 +3,7 @@
 
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { createDirectus, rest, createUser, staticToken, createItem, updateItem, readItems, readMe } from '@directus/sdk';
+import { createDirectus, rest, createUser, staticToken, createItem, updateItem, readItems, readItem, readMe } from '@directus/sdk';
 import { redirect } from 'next/navigation';
 
 const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://basquet-formativo-directus-d4c125-76-13-172-131.traefik.me';
@@ -183,6 +183,123 @@ export async function resetPasswordAction(formData: FormData) {
 
 export async function buyCourseAction(courseId: string) {
     return { error: 'Las inscripciones de pago no están disponibles actualmente en modo de prueba.' };
+}
+
+// ─── PURCHASE FLOW ────────────────────────────────────────────────────────────
+
+export async function submitPurchaseAction(formData: FormData) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('auth_session')?.value;
+    if (!token) return { error: 'Debes iniciar sesión para comprar' };
+
+    const client = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(token));
+
+    try {
+        const user = await client.request(readMe());
+
+        // Subir el comprobante de pago a Directus Files
+        const comprobanteFile = formData.get('comprobante') as File | null;
+        let comprobanteId: string | null = null;
+
+        if (comprobanteFile && comprobanteFile.size > 0) {
+            const fileForm = new FormData();
+            fileForm.append('file', comprobanteFile, comprobanteFile.name);
+
+            const uploadRes = await fetch(`${DIRECTUS_URL}/files`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${ADMIN_TOKEN}` },
+                body: fileForm,
+            });
+            const uploadData = await uploadRes.json();
+            if (!uploadRes.ok) {
+                console.error('Error subiendo comprobante:', uploadData);
+                return { error: 'Error al subir el comprobante. Intentá de nuevo.' };
+            }
+            comprobanteId = uploadData.data?.id ?? null;
+        }
+
+        const redesRaw = formData.get('redes_sociales') as string;
+        const redes = redesRaw ? JSON.parse(redesRaw) : [];
+
+        await adminClient.request(createItem('compras' as any, {
+            usuario: user.id,
+            curso: formData.get('curso_id') as string,
+            nombre: formData.get('nombre') as string,
+            apellido: formData.get('apellido') as string,
+            email: formData.get('email') as string,
+            dni: formData.get('dni') as string,
+            fecha_nacimiento: formData.get('fecha_nacimiento') as string || null,
+            telefono: formData.get('telefono') as string,
+            ciudad: formData.get('ciudad') as string,
+            pais: formData.get('pais') as string,
+            redes_sociales: redes,
+            como_enteraste: formData.get('como_enteraste') as string,
+            consultas: formData.get('consultas') as string,
+            medio_pago: formData.get('medio_pago') as string,
+            metodo_pago: formData.get('medio_pago') as string, // Para compatibilidad
+            comprobante: comprobanteId,
+            estado: 'pendiente',
+            estado_pago: 'pendiente', // Para compatibilidad
+        }));
+
+        revalidatePath('/dashboard');
+        return { success: true };
+    } catch (e: any) {
+        console.error('Error al guardar solicitud de compra:', e);
+        return { error: 'Error al enviar la solicitud. Intentá de nuevo.' };
+    }
+}
+
+export async function approvePurchaseAction(solicitudId: string) {
+    try {
+        // Obtener la solicitud
+        const solicitud = await adminClient.request(readItem('compras' as any, solicitudId));
+
+        // Crear acceso al curso
+        const existing = await adminClient.request(readItems('accesos_cursos', {
+            filter: {
+                usuario: { _eq: (solicitud as any).usuario },
+                curso: { _eq: (solicitud as any).curso },
+            }
+        }));
+
+        if (existing.length === 0) {
+            await adminClient.request(createItem('accesos_cursos', {
+                usuario: (solicitud as any).usuario,
+                curso: (solicitud as any).curso,
+                activo: true,
+            }));
+        } else {
+            await adminClient.request(updateItem('accesos_cursos', existing[0].id, { activo: true }));
+        }
+
+        // Marcar solicitud como aprobada
+        await adminClient.request(updateItem('compras' as any, solicitudId, { 
+            estado: 'aprobado',
+            estado_pago: 'Aprobado' // Coincidir con el valor del GUI de Directus
+        }));
+
+        revalidatePath('/admin/compras');
+        return { success: true };
+    } catch (e: any) {
+        console.error('Error aprobando compra:', e);
+        return { error: 'Error al aprobar la compra' };
+    }
+}
+
+export async function rejectPurchaseAction(solicitudId: string, notas?: string) {
+    try {
+        await adminClient.request(updateItem('compras' as any, solicitudId, {
+            estado: 'rechazado',
+            notas_admin: notas || '',
+        }));
+
+        revalidatePath('/admin/compras');
+        return { success: true };
+    } catch (e: any) {
+        console.error('Error rechazando compra:', e);
+        return { error: 'Error al rechazar la compra' };
+    }
 }
 
 export async function postCommentAction(courseId: string, classId: string, content: string, parentId?: string) {

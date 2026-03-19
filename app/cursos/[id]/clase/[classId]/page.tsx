@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { loginAction, buyCourseAction, toggleProgressAction } from "../../../../lib/actions";
-import { createDirectus, rest, staticToken, readMe } from "@directus/sdk";
+import { createDirectus, rest, staticToken, readMe, readItems } from "@directus/sdk";
 import CommentSection from "../../../../components/CommentSection";
 
 export const dynamic = 'force-dynamic';
@@ -37,18 +37,35 @@ export default async function ClasePage({
 
     let user = null;
     let completedClasses: string[] = [];
+    let hasAccess = false;
+
     if (token) {
         try {
-            const client = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(token));
-            user = await client.request(readMe());
+            const adminClient = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(process.env.DIRECTUS_ADMIN_TOKEN || 'WmX7KmV0IYu8uqyJoUnt7lCLRlDO-_9a'));
+            const userClient = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(token));
+            
+            user = await userClient.request(readMe());
+            
+            // 1. Verificar si tiene acceso al curso
+            const access = await adminClient.request(readItems('accesos_cursos', {
+                filter: {
+                    usuario: { _eq: user.id },
+                    curso: { _eq: course.id },
+                    activo: { _eq: true }
+                },
+                limit: 1
+            }));
+            hasAccess = (access as any[]).length > 0;
+
+            // 2. Obtener clases completadas
             const progress = await getCourseProgress(user.id, course.id);
             completedClasses = progress.map(p => p.clase);
-        } catch (e) { }
+        } catch (e) {
+            console.error('Error verificando acceso en ClasePage:', e);
+        }
     }
 
-    const purchasedCourses = cookieStore.get('purchased_courses')?.value || '';
-    const hasPurchased = purchasedCourses.includes(course.id) || purchasedCourses.includes(course.slug);
-    const canAccess = currentClass.es_gratis ? isLoggedIn : (isLoggedIn && hasPurchased);
+    const canAccess = currentClass.es_gratis ? isLoggedIn : (isLoggedIn && hasAccess);
     const isCompleted = completedClasses.includes(currentClass.id);
 
     // Cargar comentarios
