@@ -16,7 +16,8 @@ const COMO_ENTERASTE = [
     'Google', 'Podcast', 'Otro',
 ];
 
-const CVU = '0000003100047293573170';
+const CVU_MERCADOPAGO = '0000003100047293573170';
+const PAYPAL_EMAIL = 'mmarcos0202@gmail.com';
 
 interface Props {
     course: { id: string; titulo: string; precio: number; moneda: string };
@@ -198,11 +199,11 @@ export default function CheckoutForm({ course, user }: Props) {
                             </p>
                             <div className="flex items-center gap-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl px-4 py-3">
                                 <span className="font-mono text-lg font-bold tracking-widest text-primary flex-1">
-                                    {medioPago === 'mercadopago' ? CVU : 'pagos@basketformativo.com'}
+                                    {medioPago === 'mercadopago' ? CVU_MERCADOPAGO : PAYPAL_EMAIL}
                                 </span>
                                 <button
                                     type="button"
-                                    onClick={() => navigator.clipboard.writeText(medioPago === 'mercadopago' ? CVU : 'pagos@basketformativo.com')}
+                                    onClick={() => navigator.clipboard.writeText(medioPago === 'mercadopago' ? CVU_MERCADOPAGO : PAYPAL_EMAIL)}
                                     className="text-xs text-gray-400 hover:text-primary transition-colors font-semibold"
                                 >
                                     Copiar
