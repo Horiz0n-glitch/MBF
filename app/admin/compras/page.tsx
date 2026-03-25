@@ -71,8 +71,8 @@ export default async function AdminComprasPage() {
         return [];
     });
 
-    const pendientes = (solicitudes as any[]).filter(s => s.estado === 'pendiente' || !s.estado || s.estado_pago === 'pendiente');
-    const procesadas = (solicitudes as any[]).filter(s => s.estado === 'aprobado' || s.estado === 'rechazado' || s.estado_pago === 'aprobado' || s.estado_pago === 'rechazado');
+    const pendientes = (solicitudes as any[]).filter(s => s.estado === 'pendiente' || !s.estado);
+    const procesadas = (solicitudes as any[]).filter(s => s.estado === 'aprobado' || s.estado === 'rechazado');
 
     return (
         <>
@@ -161,6 +161,7 @@ function PurchaseCard({ solicitud: s, directusUrl }: { solicitud: any; directusU
                 <InfoRow label="DNI / ID" value={s.dni} />
                 <InfoRow label="Teléfono" value={s.telefono} />
                 <InfoRow label="Ciudad / País" value={`${s.ciudad || '—'}, ${s.pais || '—'}`} />
+                <InfoRow label="Estado Pago" value={s.estado_pago} highlight={s.estado_pago === 'aprobado'} />
                 <InfoRow label="Redes" value={redes} />
                 <InfoRow label="Como se enteró" value={s.como_enteraste} />
                 {s.consultas && <InfoRow label="Consultas" value={s.consultas} />}

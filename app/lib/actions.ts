@@ -6,16 +6,9 @@ import { revalidatePath } from 'next/cache';
 import { createDirectus, rest, createUser, staticToken, createItem, updateItem, readItems, readItem, readMe } from '@directus/sdk';
 import { redirect } from 'next/navigation';
 
-const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://basquet-formativo-directus-d4c125-76-13-172-131.traefik.me';
-const ADMIN_TOKEN = process.env.DIRECTUS_ADMIN_TOKEN || 'AXM_R-cgsyY4qfaDvzO-fU8BOkvmK5FD';
+import { adminClient, DIRECTUS_URL, ADMIN_TOKEN } from './directus';
+
 const ALUMNO_ROLE_ID = 'c6d89d18-ac96-4281-8567-f88e36838980';
-
-const adminClient = createDirectus(DIRECTUS_URL)
-    .with(rest())
-    .with(staticToken(ADMIN_TOKEN));
-
-const publicClient = createDirectus(DIRECTUS_URL)
-    .with(rest());
 
 export async function registerAction(formData: FormData) {
     const email = formData.get('email') as string;
@@ -243,6 +236,7 @@ export async function submitPurchaseAction(formData: FormData) {
         }));
 
         revalidatePath('/dashboard');
+        revalidatePath('/admin/compras');
         return { success: true };
     } catch (e: any) {
         console.error('Error al guardar solicitud de compra:', e);
@@ -276,10 +270,11 @@ export async function approvePurchaseAction(solicitudId: string) {
         // Marcar solicitud como aprobada
         await adminClient.request(updateItem('compras' as any, solicitudId, { 
             estado: 'aprobado',
-            estado_pago: 'Aprobado' // Coincidir con el valor del GUI de Directus
+            estado_pago: 'aprobado' // Normalizado a minúsculas
         }));
 
         revalidatePath('/admin/compras');
+        revalidatePath('/dashboard');
         return { success: true };
     } catch (e: any) {
         console.error('Error aprobando compra:', e);
