@@ -16,7 +16,9 @@ const COMO_ENTERASTE = [
     'Google', 'Podcast', 'Otro',
 ];
 
-const CVU_MERCADOPAGO = '0000003100047293573170';
+const CVU_MERCADOPAGO = '0000003100092415067264';
+const ALIAS_MERCADOPAGO = 'chapex.mp';
+const NOMBRE_MERCADOPAGO = 'Nicolás Daniel Boeri';
 const PAYPAL_EMAIL = 'mmarcos0202@gmail.com';
 
 interface Props {
@@ -193,23 +195,36 @@ export default function CheckoutForm({ course, user }: Props) {
                             {medioPago === 'mercadopago' ? 'Datos para transferencia — Mercado Pago' : 'Datos de pago — PayPal'}
                         </h3>
 
-                        <div>
-                            <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">
-                                {medioPago === 'mercadopago' ? 'CVU' : 'Email de PayPal'}
-                            </p>
-                            <div className="flex items-center gap-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl px-4 py-3">
-                                <span className="font-mono text-lg font-bold tracking-widest text-primary flex-1">
-                                    {medioPago === 'mercadopago' ? CVU_MERCADOPAGO : PAYPAL_EMAIL}
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={() => navigator.clipboard.writeText(medioPago === 'mercadopago' ? CVU_MERCADOPAGO : PAYPAL_EMAIL)}
-                                    className="text-xs text-gray-400 hover:text-primary transition-colors font-semibold"
-                                >
-                                    Copiar
-                                </button>
+                        {medioPago === 'mercadopago' ? (
+                            <>
+                                <div>
+                                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">Alias</p>
+                                    <div className="flex items-center gap-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl px-4 py-3">
+                                        <span className="font-mono text-lg font-bold tracking-widest text-primary flex-1">{ALIAS_MERCADOPAGO}</span>
+                                        <button type="button" onClick={() => navigator.clipboard.writeText(ALIAS_MERCADOPAGO)} className="text-xs text-gray-400 hover:text-primary transition-colors font-semibold">Copiar</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">CVU</p>
+                                    <div className="flex items-center gap-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl px-4 py-3">
+                                        <span className="font-mono text-lg font-bold tracking-widest text-primary flex-1">{CVU_MERCADOPAGO}</span>
+                                        <button type="button" onClick={() => navigator.clipboard.writeText(CVU_MERCADOPAGO)} className="text-xs text-gray-400 hover:text-primary transition-colors font-semibold">Copiar</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">Titular</p>
+                                    <p className="font-bold text-lg text-black dark:text-white">{NOMBRE_MERCADOPAGO}</p>
+                                </div>
+                            </>
+                        ) : (
+                            <div>
+                                <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">Email de PayPal</p>
+                                <div className="flex items-center gap-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl px-4 py-3">
+                                    <span className="font-mono text-lg font-bold tracking-widest text-primary flex-1">{PAYPAL_EMAIL}</span>
+                                    <button type="button" onClick={() => navigator.clipboard.writeText(PAYPAL_EMAIL)} className="text-xs text-gray-400 hover:text-primary transition-colors font-semibold">Copiar</button>
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         <div>
                             <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider font-semibold">Monto a pagar</p>

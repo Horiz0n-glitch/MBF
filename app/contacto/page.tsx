@@ -62,19 +62,12 @@ export default function ContactPage() {
                             <h2 className="text-2xl font-bold uppercase mb-12 border-b border-white/20 pb-4 inline-block">Información de Contacto</h2>
 
                             <div className="space-y-8">
-                                <div className="flex items-start">
-                                    <span className="material-icons text-primary mr-4">location_on</span>
-                                    <div>
-                                        <h3 className="font-bold uppercase text-sm mb-1 text-gray-400">Oficinas Centrales</h3>
-                                        <p className="text-lg">Av. del Libertador 1234, Piso 5<br />Buenos Aires, Argentina</p>
-                                    </div>
-                                </div>
 
                                 <div className="flex items-start">
                                     <span className="material-icons text-primary mr-4">email</span>
                                     <div>
                                         <h3 className="font-bold uppercase text-sm mb-1 text-gray-400">Email</h3>
-                                        <p className="text-lg">contacto@basketformativo.com</p>
+                                        <p className="text-lg">formativob@gmail.com</p>
                                     </div>
                                 </div>
 
@@ -82,7 +75,7 @@ export default function ContactPage() {
                                     <span className="material-icons text-primary mr-4">phone</span>
                                     <div>
                                         <h3 className="font-bold uppercase text-sm mb-1 text-gray-400">Teléfono</h3>
-                                        <p className="text-lg">+54 11 1234 5678</p>
+                                        <p className="text-lg">+54 9 11 6655 7437</p>
                                     </div>
                                 </div>
                             </div>

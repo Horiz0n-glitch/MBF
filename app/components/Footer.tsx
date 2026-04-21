@@ -41,9 +41,10 @@ export default function Footer() {
                         <div>
                             <h4 className="font-bold uppercase text-sm mb-4">Conectar</h4>
                             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li><a className="hover:text-primary" href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+                                <li><a className="hover:text-primary" href="https://x.com/MBFormadores" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
                                 <li><a className="hover:text-primary" href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
                                 <li><a className="hover:text-primary" href="https://www.instagram.com/basketformativo2026?igsh=aHJ1NXBhOHkzODk2&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                                <li><a className="hover:text-primary" href="https://wa.me/5491166557437" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                             </ul>
                         </div>
                     </div>
