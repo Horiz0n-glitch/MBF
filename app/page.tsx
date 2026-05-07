@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import { getHomePageData } from "./lib/home";
 import { getImageUrl } from "./lib/courses";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const data = await getHomePageData();
 
